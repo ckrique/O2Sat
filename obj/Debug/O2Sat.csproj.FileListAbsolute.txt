@@ -90,3 +90,5 @@ C:\Users\Dickson\source\repos\O2Sat\O2Sat\obj\Debug\O2Sat.csproj.CoreCompileInpu
 C:\Users\Dickson\source\repos\O2Sat\O2Sat\obj\Debug\O2Sat.csproj.CopyComplete
 C:\Users\Dickson\source\repos\O2Sat\O2Sat\obj\Debug\O2Sat.dll
 C:\Users\Dickson\source\repos\O2Sat\O2Sat\obj\Debug\O2Sat.pdb
+C:\Users\Dickson\source\repos\O2Sat\O2Sat\bin\FIWARE.OrionClient.dll
+C:\Users\Dickson\source\repos\O2Sat\O2Sat\bin\FIWARE.OrionClient.pdb

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FIWARE.OrionClient.IoTAgent;
+using FIWARE.OrionClient.REST;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -28,9 +30,16 @@ namespace O2Sat.Controllers
         }
 
         // POST api/values
-        public string Post([FromBody]Person person)
-        {
-            return "2"+ DateTime.Now.Second.ToString().Substring(1) + "." + DateTime.Now.Second.ToString() + "|" + ((DateTime.Now.Millisecond % 2 == 0) ? "ON" : "OFF");
+        public async System.Threading.Tasks.Task<string> PostAsync()
+        {            
+            RESTClient<string> restClient = new RESTClient<string>();
+            string sensorEntityName = "urn:ngsi-ld:O2Sat:001";
+            RootDataCatcher sensor = await restClient.GetMeasurementFromBroker(sensorEntityName);
+
+            string retorno = sensor.o2Saturation.value + "|" + ((DateTime.Now.Millisecond % 2 == 0) ? "ON" : "OFF");
+
+            return retorno;
+
         }
 
         // PUT api/values/5

@@ -14,15 +14,15 @@ function updateComponents() {
     //}
        
     var person = new Object();
-    person.name = "Nome";
-    person.surname = "Sobrenome";
-    $.post('http://localhost:55000/api/values', person, function (data) {
+    //person.name = "Nome";
+    //person.surname = "Sobrenome";
+    $.post('http://localhost:55000/api/Values', function (data) {
         console.log(data);
 
-        var saturationValur = data.split("|")[0];
+        var saturationValue = data.split("|")[0];
         var fanExhaustorState = data.split("|")[1];
 
-        document.getElementById("pValorSaturacao").innerHTML = saturationValur;
+        document.getElementById("pValorSaturacao").innerHTML = saturationValue;
         document.getElementById("divRectangle").style.backgroundColor = (fanExhaustorState == "ON") ? "green" : "orange";
     });
 
