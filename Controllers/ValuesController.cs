@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace O2Sat.Controllers
@@ -30,13 +31,17 @@ namespace O2Sat.Controllers
         }
 
         // POST api/values
-        public async System.Threading.Tasks.Task<string> PostAsync()
+        public async Task<string> PostAsync()
         {            
             RESTClient<string> restClient = new RESTClient<string>();
-            string sensorEntityName = "urn:ngsi-ld:O2Sat:001";
-            RootDataCatcher sensor = await restClient.GetMeasurementFromBroker(sensorEntityName);
+            string sensorEntityName = "urn:ngsi-ld:sensor:001";
+            SensorRootDataCatcher sensor = await restClient.GetMeasurementFromBroker(sensorEntityName, "sensor") as SensorRootDataCatcher;
 
-            string retorno = sensor.o2Saturation.value + "|" + ((DateTime.Now.Millisecond % 2 == 0) ? "ON" : "OFF");
+            restClient = new RESTClient<string>();
+            string exhaustorEntityName = "urn:ngsi-ld:fanEhxaustor:001";
+            ExhaustorRootDataCatcher exhaustor = await restClient.GetMeasurementFromBroker(exhaustorEntityName, "exhaustor") as ExhaustorRootDataCatcher;
+
+            string retorno = sensor.o2Saturation.value + "|" + exhaustor.state.value;
 
             return retorno;
 
