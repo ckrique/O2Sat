@@ -8,9 +8,20 @@ function updateComponents() {
         var saturationValue = data.split("|")[0];
         var fanExhaustorState = data.split("|")[1];
 
-        document.getElementById("pValorSaturacao").innerHTML = saturationValue;
-        document.getElementById("divRectangle").style.backgroundColor = (fanExhaustorState == "ON") ? "green" : "orange";
-        document.getElementById("divRectangle").innerHTML = (fanExhaustorState == "ON") ? "LIGADO" : "DESLIGADOR";
+        document.getElementById("pValorSaturacao").innerHTML = saturationValue;        
+
+        var elem = document.createElement("img");
+        //elem.setAttribute("src", "images/hydrangeas.jpg");
+        elem.setAttribute("height", "173");
+        elem.setAttribute("width", "173");
+        //elem.setAttribute("alt", "Flower");
+
+        if (fanExhaustorState === "ON") {
+            document.getElementById("exhaustorImage").src = '../images/runningExhaustor.gif';
+        }
+        else if (fanExhaustorState === "OFF") {
+            document.getElementById("exhaustorImage").src = '../images/stopedExhaustor.png';
+        }
     });
 
 }
