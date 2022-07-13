@@ -19,8 +19,11 @@ namespace O2Sat.Controllers
         }
 
         // GET api/values
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<string>> GetAsync()
         {
+            RESTClient<string> restClient = new RESTClient<string>();
+            await restClient.PatchAsyncTriggerExhaustorCommand("on");
+
             return new string[] { "value1", "value2" };
         }
 
@@ -40,6 +43,25 @@ namespace O2Sat.Controllers
             restClient = new RESTClient<string>();
             string exhaustorEntityName = "urn:ngsi-ld:fanEhxaustor:001";
             ExhaustorRootDataCatcher exhaustor = await restClient.GetMeasurementFromBroker(exhaustorEntityName, "exhaustor") as ExhaustorRootDataCatcher;
+
+            restClient = new RESTClient<string>();
+
+            if (Convert.ToDouble(sensor.o2Saturation.value) < 19)
+            {
+                await restClient.PatchAsyncTriggerExhaustorCommand("on");
+
+                restClient = new RESTClient<string>();
+
+                await restClient.PostAsyncTriggerSensorBackDoor("UP");
+            }
+            else if (Convert.ToDouble(sensor.o2Saturation.value) > 23)
+            {
+                await restClient.PatchAsyncTriggerExhaustorCommand("off");
+
+                restClient = new RESTClient<string>();
+
+                await restClient.PostAsyncTriggerSensorBackDoor("DOWN");
+            }
 
             string retorno = sensor.o2Saturation.value + "|" + exhaustor.state.value;
 
